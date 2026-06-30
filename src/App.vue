@@ -1,258 +1,203 @@
 <template>
-  <div class="relative min-h-screen">
-    <div class="course-bg"></div>
-    <div class="course-grid"></div>
+  <div class="min-h-screen flex flex-col justify-between bg-grid">
+    <div class="scanlines"></div>
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-[#03040a]/80 backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-            <span class="text-sm">🧠</span>
-          </div>
-          <div class="text-sm font-medium tracking-wide text-slate-300">
-            生理心理学 <span class="text-slate-600">|</span> Physiological Psychology
+    <AppHeader :synapse-rate="synapseRate" />
+
+    <div class="flex-grow grid grid-cols-1 xl:grid-cols-12 gap-6 p-6 overflow-hidden relative z-10">
+      <!-- Left Column -->
+      <div class="xl:col-span-3 flex flex-col gap-6">
+        <!-- Navigation -->
+        <div class="quantum-panel p-5 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+          <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-network-wired text-blue-400"></i> 控制中枢 / CORE NAVIGATION
+          </h3>
+          <div class="space-y-2">
+            <button
+              v-for="tab in tabs"
+              :key="tab.id"
+              @click="switchTab(tab.id)"
+              :class="[
+                'w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center justify-between',
+                activeTab === tab.id ? 'tab-active' : 'text-slate-400 hover:bg-slate-900'
+              ]"
+            >
+              <span class="flex items-center gap-3"><i :class="tab.icon"></i> {{ tab.label }}</span>
+              <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+            </button>
           </div>
         </div>
-        <div class="course-pill">
-          <span class="course-pill-dot"></span>
-          CLASSROOM EDITION
+
+        <!-- Neurotransmitter Dashboard -->
+        <NeurotransmitterDashboard :levels="ntLevels" @update-levels="updateLevels" class="flex-grow" />
+      </div>
+
+      <!-- Middle Column -->
+      <div class="xl:col-span-6 flex flex-col gap-6 min-h-[500px]">
+        <!-- Brain Explorer Tab -->
+        <div v-show="activeTab === 'brain-explorer'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+          <div class="absolute top-0 left-0 w-full h-1 bg-cyan-500/50 scanner-line"></div>
+
+          <div class="flex justify-between items-center mb-2 z-10">
+            <div>
+              <h2 class="text-base font-bold text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-circle-dot text-cyan-400 animate-pulse"></i>
+                3D 全脑定位与大脑皮层生理图谱
+              </h2>
+              <p class="text-[11px] text-slate-500">点击不同脑区激活特定的生理心理学神经元通路</p>
+            </div>
+            <div class="flex items-center space-x-2 text-[10px] font-mono-tech text-slate-400 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
+              <span>ROTATION</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+            </div>
+          </div>
+
+          <div class="relative flex-grow min-h-[300px] border border-slate-900 rounded-xl bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden flex items-center justify-center">
+            <Brain3D :highlighted-region="selectedRegion" @select="selectRegion" />
+
+            <div class="absolute bottom-3 left-3 bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-lg text-[10px] text-slate-400 flex items-center gap-2 pointer-events-none backdrop-blur-sm">
+              <i class="fa-solid fa-arrows-spin text-blue-400 animate-spin"></i>
+              <span>拖拽旋转 / 滚轮缩放 / 点击高亮脑区</span>
+            </div>
+
+            <div class="absolute top-3 right-3 flex flex-col gap-2 pointer-events-none">
+              <div class="bg-slate-950/70 border border-slate-800 px-3 py-1.5 rounded font-mono-tech text-[10px] text-right">
+                <span class="text-slate-500">脑电波(EEG):</span>
+                <span class="text-cyan-400 font-bold ml-1 animate-pulse">{{ eegFrequency }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 sm:grid-cols-6 gap-2 z-10">
+            <button
+              v-for="region in regionList"
+              :key="region.id"
+              @click="selectRegion(region.id)"
+              class="py-2 px-1 rounded text-[11px] font-medium transition-all text-center border"
+              :class="selectedRegion === region.id
+                ? 'bg-blue-900/40 border-blue-500/50 text-blue-300'
+                : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'"
+              :style="selectedRegion === region.id ? { boxShadow: `0 0 12px ${region.hex}30` } : {}"
+            >
+              {{ region.short }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Synapse Stimulator Tab -->
+        <div v-show="activeTab === 'synapse-stimulator'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+          <SynapseSimulator />
+        </div>
+
+        <!-- Hormone Analyzer Tab -->
+        <div v-show="activeTab === 'hormone-analyzer'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+          <HormoneAnalyzer :levels="ntLevels" />
         </div>
       </div>
-    </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-10 relative z-10">
-      <!-- Hero Section -->
-      <section class="grid lg:grid-cols-2 gap-8 mb-20">
-        <!-- Left Column -->
-        <div class="space-y-8">
-          <div class="space-y-6">
-            <div class="course-pill">
-              <span class="course-pill-dot"></span>
-              PHYSIOLOGICAL PSYCHOLOGY / CLASSROOM EDITION
-            </div>
+      <!-- Right Column -->
+      <div class="xl:col-span-3 flex flex-col gap-6">
+        <RegionDetail :region="currentRegion" class="flex-grow" />
+        <ClinicalCases @load-case="loadCase" />
+      </div>
+    </div>
 
-            <h1 class="course-title text-6xl md:text-7xl lg:text-8xl text-white">
-              生理心理学
-            </h1>
-
-            <div class="course-body max-w-xl space-y-4">
-              <p>
-                以更直观的 3D 大脑示意图为入口，把 cerebral cortex、limbic system、diencephalon、basal ganglia 与 language network 放进同一页课程框架。
-              </p>
-              <p>
-                中文主叙述配英文对照，面向课堂投屏、双语讲解和复习整理。首屏优先强调结构感和空间层次，而不是平面解剖标签堆叠。
-              </p>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-3">
-            <button
-              v-for="cat in categories"
-              :key="cat.key"
-              @click="activeCategory = activeCategory === cat.key ? null : cat.key"
-              :class="['course-btn', activeCategory === cat.key ? 'active' : '']"
-            >
-              {{ cat.en }}
-            </button>
-            <button
-              @click="activeCategory = null"
-              :class="['course-btn', activeCategory === null ? 'active' : '']"
-            >
-              All regions
-            </button>
-          </div>
-
-          <div class="grid sm:grid-cols-3 gap-4">
-            <div
-              v-for="cat in categories"
-              :key="cat.key"
-              class="course-card p-5 relative overflow-hidden group cursor-pointer"
-              :class="activeCategory === cat.key ? 'border-white/20' : ''"
-              @click="activeCategory = activeCategory === cat.key ? null : cat.key"
-            >
-              <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500" :class="cat.color"></div>
-              <div class="relative z-10">
-                <div class="text-[10px] font-bold tracking-[0.15em] text-slate-500 uppercase mb-2">{{ cat.en }}</div>
-                <h3 class="text-lg font-bold text-white mb-1">{{ cat.label }}</h3>
-                <p class="course-caption">{{ cat.desc }}</p>
-              </div>
-            </div>
-          </div>
-
-          <p class="course-caption max-w-lg">
-            页面定位：主图用于建立空间结构印象，功能定位与损伤表现仍按下方课程化摘要阅读。
-          </p>
-        </div>
-
-        <!-- Right Column -->
-        <div class="space-y-6">
-          <div class="course-card p-1 relative min-h-[560px]">
-            <div class="course-card-glow"></div>
-            <div class="absolute top-4 left-5 right-5 flex items-center justify-between z-10">
-              <span class="text-xs text-slate-400">Interactive 3D brain model for classroom display</span>
-              <span class="course-badge">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                DRAG / ZOOM MODEL
-              </span>
-            </div>
-
-            <div class="relative h-full rounded-[1.25rem] overflow-hidden bg-[#05060c]">
-              <Brain3D @select="selectedRegion = $event" />
-
-              <!-- Floating labels -->
-              <div class="absolute top-16 left-5 flex gap-2 z-10">
-                <span class="course-badge">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  REAL 3D MODEL
-                </span>
-                <span class="course-badge">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  LATERAL VIEW FOCUS
-                </span>
-              </div>
-
-              <!-- Deep structures inset -->
-              <div class="absolute top-16 right-5 w-44 course-info-card z-10">
-                <div class="text-[10px] font-bold tracking-[0.15em] text-slate-500 uppercase mb-2">Deep Structures Inset</div>
-                <h4 class="text-sm font-bold text-white mb-2">内侧/深部结构 Medial + deep view</h4>
-                <div class="relative h-24 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center overflow-hidden">
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div v-for="(r, i) in deepRegions" :key="r.en"
-                         class="absolute w-6 h-6 rounded-full border border-white/20 flex items-center justify-center"
-                         :style="{
-                           background: 'rgba(255,255,255,0.08)',
-                           top: [25, 45, 60, 40, 70][i] + '%',
-                           left: [15, 40, 65, 80, 50][i] + '%'
-                         }">
-                      <span class="w-2 h-2 rounded-full" :style="{ background: '#' + r.color.toString(16).padStart(6, '0') }"></span>
-                    </div>
-                  </div>
-                </div>
-                <p class="course-caption mt-2">
-                  把 hippocampus、amygdala、thalamus、hypothalamus 与 basal ganglia 从外侧观分离出来，课堂上更符合解剖展示习惯。
-                </p>
-              </div>
-
-              <div class="course-corner tl"></div>
-              <div class="tech-corner tr"></div>
-              <div class="tech-corner bl"></div>
-              <div class="tech-corner br"></div>
-            </div>
-          </div>
-
-          <!-- Interaction Panel -->
-          <div class="course-card p-6">
-            <h3 class="text-lg font-bold text-white mb-4">交互方式 / Interaction</h3>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="course-info-card">
-                <div class="course-info-label">Selected Region</div>
-                <template v-if="selectedRegion">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="w-2.5 h-2.5 rounded-full" :style="{ background: '#' + selectedRegion.color.toString(16).padStart(6, '0') }"></span>
-                    <h4 class="text-lg font-bold text-white">{{ selectedRegion.name }} {{ selectedRegion.en }}</h4>
-                  </div>
-                  <p class="course-caption">{{ selectedRegion.desc }}</p>
-                </template>
-                <p v-else class="course-caption">点击 3D 模型中的彩色标记选择脑区，查看功能说明。</p>
-              </div>
-              <div class="course-info-card">
-                <div class="course-info-label">Teaching Note</div>
-                <template v-if="selectedRegion">
-                  <p class="course-caption">{{ selectedRegion.teachingNote }}</p>
-                </template>
-                <p v-else class="course-caption">选择脑区后将显示课堂教学建议与讲解要点。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Action Potential -->
-      <section id="action-potential" class="mb-20 space-y-6">
-        <div class="flex items-center gap-4">
-          <h2 class="course-section-title text-3xl text-white">动作电位传导</h2>
-          <span class="course-badge">Action Potential</span>
-        </div>
-        <div class="grid lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2">
-            <ActionPotential />
-          </div>
-          <div class="course-card p-6 space-y-4">
-            <h3 class="font-bold text-white">机制说明</h3>
-            <p class="course-caption">
-              动作电位是神经元膜电位的快速、可传导变化。刺激达到阈值后，Na⁺ 通道开放引发去极化；随后 K⁺ 通道开放引发复极化。
-            </p>
-            <div class="space-y-2">
-              <div class="flex items-center gap-3 text-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                <span class="text-slate-300">静息电位 ≈ -70mV</span>
-              </div>
-              <div class="flex items-center gap-3 text-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                <span class="text-slate-300">去极化：Na⁺ 内流</span>
-              </div>
-              <div class="flex items-center gap-3 text-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-                <span class="text-slate-300">复极化：K⁺ 外流</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Neurotransmitters -->
-      <section id="neurotransmitters" class="mb-20 space-y-6">
-        <div class="flex items-center gap-4">
-          <h2 class="course-section-title text-3xl text-white">神经递质数据库</h2>
-          <span class="course-badge">Neurotransmitters</span>
-        </div>
-        <Neurotransmitters />
-      </section>
-
-      <!-- Sleep -->
-      <section id="sleep" class="mb-20 space-y-6">
-        <div class="flex items-center gap-4">
-          <h2 class="course-section-title text-3xl text-white">睡眠周期分析</h2>
-          <span class="course-badge">Sleep Cycle</span>
-        </div>
-        <div class="course-card p-6">
-          <SleepChart />
-        </div>
-      </section>
-
-      <!-- Footer -->
-      <footer class="border-t border-white/5 pt-8 pb-12 text-center">
-        <p class="course-caption">
-          生理心理学可视化 · Classroom Edition · Vue 3 + Vite + Three.js
-        </p>
-      </footer>
-    </main>
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
+import NeurotransmitterDashboard from './components/NeurotransmitterDashboard.vue'
 import Brain3D from './components/Brain3D.vue'
-import ActionPotential from './components/ActionPotential.vue'
-import Neurotransmitters from './components/Neurotransmitters.vue'
-import SleepChart from './components/SleepChart.vue'
-import { brainRegions, categories } from './data/brainRegions.js'
+import SynapseSimulator from './components/SynapseSimulator.vue'
+import HormoneAnalyzer from './components/HormoneAnalyzer.vue'
+import RegionDetail from './components/RegionDetail.vue'
+import ClinicalCases from './components/ClinicalCases.vue'
+import { brainRegions, regionList } from './data/brainRegions.js'
 import './assets/tech-theme.css'
 
-const selectedRegion = ref(null)
-const activeCategory = ref(null)
+const tabs = [
+  { id: 'brain-explorer', label: '3D 大脑与功能定位', icon: 'fa-solid fa-head-side-virus' },
+  { id: 'synapse-stimulator', label: '突触递质传递模拟', icon: 'fa-solid fa-bolt-lightning' },
+  { id: 'hormone-analyzer', label: '递质情绪协同分析', icon: 'fa-solid fa-vial' }
+]
 
-const deepRegions = computed(() => {
-  return brainRegions.filter(r =>
-    ['Hippocampus', 'Amygdala', 'Thalamus', 'Hypothalamus', 'Basal Ganglia'].includes(r.fullEn)
-  )
+const activeTab = ref('brain-explorer')
+const selectedRegion = ref('frontal')
+
+const ntLevels = ref({
+  dopamine: 75,
+  serotonin: 60,
+  norepinephrine: 45,
+  endorphin: 50
 })
+
+const currentRegion = computed(() => brainRegions[selectedRegion.value])
+
+const synapseRate = computed(() => {
+  const base = 90
+  const bindingBoost = ((ntLevels.value.dopamine + ntLevels.value.norepinephrine) / 200) * 10
+  return `${(base + bindingBoost).toFixed(1)}%`
+})
+
+const eegFrequency = computed(() => {
+  const da = ntLevels.value.dopamine
+  const se = ntLevels.value.serotonin
+  const ne = ntLevels.value.norepinephrine
+  let freq = 14.5
+  if (da > 75 && se > 60 && ne < 55) freq = 12.8
+  else if (ne > 75 && da > 65) freq = 22.4
+  else if (se < 40 && da < 40) freq = 6.2
+  else if (da > 85 && ne > 85) freq = 28.1
+
+  const waveType = freq < 8 ? 'θ波 (沉睡/疲惫)' : (freq < 13 ? 'α波 (静息/放松)' : (freq < 25 ? 'β波 (思考/专注)' : 'γ波 (极度兴奋)'))
+  return `${freq.toFixed(1)} Hz (${waveType})`
+})
+
+const switchTab = (tabId) => {
+  activeTab.value = tabId
+}
+
+const selectRegion = (regionId) => {
+  selectedRegion.value = regionId
+  const r = brainRegions[regionId]
+  ntLevels.value = {
+    dopamine: r.dopamine,
+    serotonin: r.serotonin,
+    norepinephrine: r.norepinephrine,
+    endorphin: r.endorphin
+  }
+}
+
+const updateLevels = (newLevels) => {
+  ntLevels.value = { ...newLevels }
+}
+
+const loadCase = (caseType) => {
+  if (caseType === 'depression') {
+    ntLevels.value = { dopamine: 28, serotonin: 25, norepinephrine: 35, endorphin: 30 }
+    selectedRegion.value = 'frontal'
+  } else if (caseType === 'adhd') {
+    ntLevels.value = { dopamine: 30, serotonin: 55, norepinephrine: 22, endorphin: 45 }
+    selectedRegion.value = 'frontal'
+  } else if (caseType === 'schizophrenia') {
+    ntLevels.value = { dopamine: 98, serotonin: 40, norepinephrine: 80, endorphin: 50 }
+    selectedRegion.value = 'temporal'
+  } else if (caseType === 'addiction') {
+    ntLevels.value = { dopamine: 100, serotonin: 30, norepinephrine: 85, endorphin: 85 }
+    selectedRegion.value = 'temporal'
+  }
+}
+
+watch(ntLevels, () => {
+  // Sync selected region data if it matches current region defaults
+}, { deep: true })
 </script>
 
 <style scoped>
-:deep(.canvas-container) {
-  border-radius: 1.25rem;
-  background: #05060c;
-}
+/* Component-specific styles */
 </style>
