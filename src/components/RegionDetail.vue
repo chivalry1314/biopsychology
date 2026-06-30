@@ -14,12 +14,12 @@
       </div>
 
       <div>
-        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">主要生理学功能 / Physiological Functions</h4>
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">主要生理学功能 / Physiological</h4>
         <p class="text-xs text-slate-300 leading-relaxed">{{ region.physio }}</p>
       </div>
 
       <div>
-        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">核心关联心理机制 / Psychological Mechanics</h4>
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">核心关联心理机制 / Psychological</h4>
         <p class="text-xs text-slate-300 leading-relaxed">{{ region.psycho }}</p>
       </div>
 

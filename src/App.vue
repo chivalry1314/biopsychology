@@ -75,9 +75,14 @@
               v-for="region in regionList"
               :key="region.id"
               @click="selectRegion(region.id)"
-              class="bg-slate-900 hover:bg-blue-950/30 border border-slate-800 hover:border-blue-700/50 py-2 px-1 rounded text-[11px] text-slate-300 font-medium transition-all text-center"
+              :class="[
+                'py-2 px-1 rounded text-[11px] font-medium transition-all text-center border',
+                selectedRegion === region.id
+                  ? 'bg-blue-950/50 border-blue-500/80 text-blue-300'
+                  : 'bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200'
+              ]"
             >
-              {{ region.short }}
+              {{ region.shortName }}
             </button>
           </div>
         </div>

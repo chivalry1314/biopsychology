@@ -5,7 +5,7 @@
     </h3>
     <div class="space-y-2">
       <p class="text-[11px] text-slate-400 leading-normal">
-        点击下方生成典型的生理心理病理模型，快速载入对应突触递质与大脑通路。
+        点击快速模拟特定病理状态下的递质阈值与大脑病变特征，实时生成患者报告。
       </p>
       <div class="grid grid-cols-2 gap-2 mt-2">
         <button
@@ -29,7 +29,7 @@ const cases = [
   { key: 'depression', name: '重度抑郁症', bio: '5-HT ↓ / DA ↓' },
   { key: 'adhd', name: 'ADHD多动症', bio: 'NE ↓ / DA ↓' },
   { key: 'schizophrenia', name: '精神分裂症', bio: 'DA ↑↑ (皮质下)' },
-  { key: 'addiction', name: '成瘾行为', bio: 'DA 暴涨与崩盘' }
+  { key: 'addiction', name: '成瘾行为', bio: 'DA 暴涨与脱敏' }
 ]
 
 const loadCase = (key) => {

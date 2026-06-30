@@ -15,12 +15,16 @@
             </span>
             <span class="font-mono font-semibold" :style="{ color: nt.hex }">{{ levels[nt.key] }}%</span>
           </div>
-          <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
-            <div
-              class="h-1.5 rounded-full transition-all duration-500 bg-gradient-to-r"
-              :class="[nt.from, nt.to]"
-              :style="{ width: `${levels[nt.key]}%` }"
-            ></div>
+          <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden flex items-center">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              :value="levels[nt.key]"
+              @input="updateLevel(nt.key, $event.target.value)"
+              class="w-full h-1 bg-slate-800 rounded-lg cursor-pointer"
+              :style="{ accentColor: nt.hex }"
+            />
           </div>
         </div>
       </div>
@@ -51,7 +55,7 @@
           @click="applyPreset('fight')"
           class="flex-1 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/50 py-1.5 px-1 rounded text-[10px] font-mono text-rose-300 hover:text-rose-200 transition-all"
         >
-          战斗或逃跑
+          战斗逃跑
         </button>
       </div>
     </div>
@@ -71,6 +75,10 @@ const props = defineProps({
 
 const emit = defineEmits(['update-levels'])
 
+const updateLevel = (key, value) => {
+  emit('update-levels', { ...props.levels, [key]: Number(value) })
+}
+
 const applyPreset = (type) => {
   let next
   if (type === 'joy') next = { dopamine: 95, serotonin: 85, norepinephrine: 65, endorphin: 80 }
@@ -88,3 +96,27 @@ const dominantState = computed(() => {
   return '平衡、适应性基底稳态 (ANS自平衡)'
 })
 </script>
+
+<style scoped>
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  cursor: pointer;
+  margin-top: -4px;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: #1e293b;
+  border-radius: 2px;
+}
+</style>
