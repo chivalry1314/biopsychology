@@ -5,10 +5,10 @@
     <AppHeader :synapse-rate="synapseRate" />
 
     <div class="flex-grow grid grid-cols-1 xl:grid-cols-12 gap-6 p-6 overflow-hidden relative z-10">
-      <!-- Left Column -->
+      <!-- LEFT COLUMN -->
       <div class="xl:col-span-3 flex flex-col gap-6">
         <!-- Navigation -->
-        <div class="quantum-panel p-5 relative overflow-hidden">
+        <div class="bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md relative overflow-hidden">
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
           <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center gap-2">
             <i class="fa-solid fa-network-wired text-blue-400"></i> 控制中枢 / CORE NAVIGATION
@@ -30,13 +30,16 @@
         </div>
 
         <!-- Neurotransmitter Dashboard -->
-        <NeurotransmitterDashboard :levels="ntLevels" @update-levels="updateLevels" class="flex-grow" />
+        <NeurotransmitterDashboard :levels="ntLevels" @update-levels="updateLevels" />
       </div>
 
-      <!-- Middle Column -->
+      <!-- MIDDLE COLUMN -->
       <div class="xl:col-span-6 flex flex-col gap-6 min-h-[500px]">
-        <!-- Brain Explorer Tab -->
-        <div v-show="activeTab === 'brain-explorer'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+        <!-- Brain Explorer -->
+        <div
+          v-show="activeTab === 'brain-explorer'"
+          class="tab-content flex-grow bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md flex flex-col relative overflow-hidden"
+        >
           <div class="absolute top-0 left-0 w-full h-1 bg-cyan-500/50 scanner-line"></div>
 
           <div class="flex justify-between items-center mb-2 z-10">
@@ -74,29 +77,32 @@
               v-for="region in regionList"
               :key="region.id"
               @click="selectRegion(region.id)"
-              class="py-2 px-1 rounded text-[11px] font-medium transition-all text-center border"
-              :class="selectedRegion === region.id
-                ? 'bg-blue-900/40 border-blue-500/50 text-blue-300'
-                : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'"
-              :style="selectedRegion === region.id ? { boxShadow: `0 0 12px ${region.hex}30` } : {}"
+              class="bg-slate-900 hover:bg-blue-950/30 border border-slate-800 hover:border-blue-700/50 py-2 px-1 rounded text-[11px] text-slate-300 font-medium transition-all text-center"
+              :class="selectedRegion === region.id ? 'bg-blue-950/30 border-blue-700/50 text-blue-300' : ''"
             >
               {{ region.short }}
             </button>
           </div>
         </div>
 
-        <!-- Synapse Stimulator Tab -->
-        <div v-show="activeTab === 'synapse-stimulator'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+        <!-- Synapse Stimulator -->
+        <div
+          v-show="activeTab === 'synapse-stimulator'"
+          class="tab-content flex-grow bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md flex flex-col relative overflow-hidden"
+        >
           <SynapseSimulator />
         </div>
 
-        <!-- Hormone Analyzer Tab -->
-        <div v-show="activeTab === 'hormone-analyzer'" class="flex-grow quantum-panel p-5 relative overflow-hidden flex flex-col">
+        <!-- Hormone Analyzer -->
+        <div
+          v-show="activeTab === 'hormone-analyzer'"
+          class="tab-content flex-grow bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md flex flex-col relative overflow-hidden"
+        >
           <HormoneAnalyzer :levels="ntLevels" />
         </div>
       </div>
 
-      <!-- Right Column -->
+      <!-- RIGHT COLUMN -->
       <div class="xl:col-span-3 flex flex-col gap-6">
         <RegionDetail :region="currentRegion" class="flex-grow" />
         <ClinicalCases @load-case="loadCase" />
@@ -108,7 +114,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
 import NeurotransmitterDashboard from './components/NeurotransmitterDashboard.vue'
@@ -192,12 +198,4 @@ const loadCase = (caseType) => {
     selectedRegion.value = 'temporal'
   }
 }
-
-watch(ntLevels, () => {
-  // Sync selected region data if it matches current region defaults
-}, { deep: true })
 </script>
-
-<style scoped>
-/* Component-specific styles */
-</style>

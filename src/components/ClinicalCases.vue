@@ -1,5 +1,5 @@
 <template>
-  <div class="quantum-panel p-5 relative overflow-hidden">
+  <div class="bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md relative overflow-hidden">
     <h3 class="text-sm font-bold text-slate-300 mb-3 flex items-center gap-2">
       <i class="fa-solid fa-hospital-user text-rose-400"></i> AI 生理心理临床案例模拟
     </h3>

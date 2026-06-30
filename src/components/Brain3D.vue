@@ -298,9 +298,11 @@ function highlightBrainMesh(regionId) {
 
 <style scoped>
 .canvas-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+}
+.canvas-container:active {
+  cursor: grabbing;
 }
 </style>

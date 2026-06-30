@@ -1,18 +1,18 @@
 <template>
-  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-4 flex flex-wrap justify-between items-center z-50 relative">
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-4 flex flex-wrap justify-between items-center z-10 relative">
     <div class="flex items-center space-x-3">
       <div class="w-10 h-10 rounded-lg bg-blue-600/20 border border-blue-500/50 flex items-center justify-center pulse-element">
         <i class="fa-solid fa-brain text-blue-400 text-xl"></i>
       </div>
       <div>
-        <h1 class="text-lg md:text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 font-tech">
+        <h1 class="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 tech-font">
           BIO-PSYCHOLOGY QUANTUM VISUALIZER
         </h1>
-        <p class="text-[10px] md:text-xs text-slate-400 tracking-widest uppercase">生理心理学全息智能交互诊断分析终端 v3.5</p>
+        <p class="text-xs text-slate-400 tracking-widest uppercase">生理心理学全息智能交互诊断分析终端 v3.5</p>
       </div>
     </div>
 
-    <div class="flex items-center space-x-4 md:space-x-6 text-xs text-slate-400 font-mono-tech mt-3 md:mt-0">
+    <div class="flex items-center space-x-6 text-xs text-slate-400 font-mono-tech mt-4 md:mt-0">
       <div class="hidden lg:block border-l border-slate-800 pl-4">
         <span class="text-slate-500">突触网络活跃度:</span>
         <span class="text-emerald-400 glow-emerald font-bold ml-1">{{ synapseRate }}</span>

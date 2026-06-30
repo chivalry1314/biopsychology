@@ -1,5 +1,5 @@
 <template>
-  <div class="quantum-panel p-5 relative overflow-hidden flex flex-col h-full">
+  <div class="bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md flex-grow flex flex-col justify-between">
     <div>
       <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center justify-between">
         <span class="flex items-center gap-2"><i class="fa-solid fa-flask-vial text-purple-400"></i> 生理化学递质调控</span>
@@ -9,7 +9,7 @@
       <div class="space-y-4">
         <div v-for="nt in neurotransmitters" :key="nt.key">
           <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-400 flex items-center gap-1.5">
+            <span class="text-slate-400 flex items-center gap-1">
               <span class="w-2 h-2 rounded-full" :style="{ background: nt.hex }"></span>
               {{ nt.name }} ({{ nt.abbr }}) - {{ nt.role }}
             </span>
@@ -34,22 +34,22 @@
           {{ dominantState }}
         </p>
       </div>
-      <div class="mt-3 grid grid-cols-3 gap-2">
+      <div class="mt-3 flex justify-between gap-2">
         <button
           @click="applyPreset('joy')"
-          class="bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-blue-300 hover:text-blue-200 transition-all"
+          class="flex-1 bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-blue-300 hover:text-blue-200 transition-all"
         >
           激悦模式
         </button>
         <button
           @click="applyPreset('calm')"
-          class="bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-emerald-300 hover:text-emerald-200 transition-all"
+          class="flex-1 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-emerald-300 hover:text-emerald-200 transition-all"
         >
           镇静沉思
         </button>
         <button
           @click="applyPreset('fight')"
-          class="bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-rose-300 hover:text-rose-200 transition-all"
+          class="flex-1 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/50 py-1.5 px-1 rounded text-[10px] font-mono-tech text-rose-300 hover:text-rose-200 transition-all"
         >
           战斗或逃跑
         </button>

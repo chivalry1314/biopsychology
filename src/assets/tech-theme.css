@@ -1,37 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
-
-:root {
-  --bg-primary: #030712;
-  --bg-panel: rgba(2, 6, 23, 0.85);
-  --border-color: rgba(51, 65, 85, 0.8);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent-blue: #3b82f6;
-  --accent-cyan: #06b6d4;
-  --accent-purple: #8b5cf6;
-  --accent-emerald: #10b981;
-  --accent-rose: #f43f5e;
-  --accent-amber: #f59e0b;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 
 body {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: 'Noto Sans SC', 'Orbitron', 'Share Tech Mono', sans-serif;
+  background-color: #030712;
+  color: #e5e7eb;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Scanline overlay */
+.tech-font {
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+}
+
+.font-mono-tech {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* Scanline effect */
 .scanlines {
   position: fixed;
   top: 0;
@@ -43,32 +27,12 @@ body {
     rgba(0, 0, 0, 0.25) 50%
   );
   background-size: 100% 4px;
-  z-index: 9999;
+  z-index: 999;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.4;
 }
 
-/* Grid background */
-.bg-grid {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-size: 40px 40px;
-  background-image:
-    linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
-}
-
-/* Tech fonts */
-.font-tech {
-  font-family: 'Orbitron', 'Share Tech Mono', monospace;
-}
-
-.font-mono-tech {
-  font-family: 'Share Tech Mono', monospace;
-}
-
-/* Glow effects */
+/* Cyberpunk glowing effect */
 .glow-blue {
   text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.4);
 }
@@ -81,61 +45,14 @@ body {
   text-shadow: 0 0 10px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.4);
 }
 
-/* Panel card */
-.quantum-panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  backdrop-filter: blur(12px);
-}
-
-.quantum-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
-}
-
-/* Active tab */
-.tab-active {
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, transparent 100%);
-  border-left: 3px solid var(--accent-blue);
-  color: #60a5fa;
-}
-
-/* Pulse animation */
-@keyframes radar-pulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 0.4; }
-  100% { transform: scale(0.95); opacity: 0.8; }
-}
-
-.pulse-element {
-  animation: radar-pulse 3s infinite ease-in-out;
-}
-
-/* Scanner line */
-@keyframes scan-horizontal {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.scanner-line {
-  animation: scan-horizontal 4s infinite linear;
-}
-
-/* Border glow */
 .border-glow-blue {
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.4);
 }
 
 .border-glow-purple {
   box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
-  border-color: rgba(139, 92, 246, 0.4);
+  border: 1px solid rgba(139, 92, 246, 0.4);
 }
 
 /* Custom scrollbar */
@@ -155,4 +72,49 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(59, 130, 246, 0.8);
+}
+
+/* Grid Background */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+}
+
+/* Active navigation tab */
+.tab-active {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.2) 0%, transparent 100%);
+  border-left: 4px solid #3b82f6;
+  color: #60a5fa;
+}
+
+/* Pulse circle for synaptic stimulation */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.pulse-element {
+  animation: radar-pulse 3s infinite ease-in-out;
+}
+
+/* Loading animation line */
+@keyframes scan-horizontal {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.scanner-line {
+  animation: scan-horizontal 4s infinite linear;
 }
