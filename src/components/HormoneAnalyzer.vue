@@ -31,14 +31,14 @@
               <div class="bg-gradient-to-r from-rose-500 to-rose-400 h-full transition-all duration-500" :style="{ width: `${sympathetic}%` }"></div>
               <div class="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full transition-all duration-500" :style="{ width: `${parasympathetic}%` }"></div>
             </div>
-            <div class="flex justify-between text-[10px] font-mono-tech text-slate-500 mt-1">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
               <span>{{ sympathetic }}% 觉醒度</span>
               <span>{{ parasympathetic }}% 稳态</span>
             </div>
           </div>
 
           <div class="bg-slate-950/80 rounded-lg p-3 border border-slate-800/80">
-            <span class="text-[10px] text-purple-400 font-mono-tech block mb-1">生理心理医学关联分析 (Biomedical Insight):</span>
+            <span class="text-[10px] text-purple-400 font-mono block mb-1">生理心理医学关联分析 (Biomedical Insight):</span>
             <p class="text-xs text-slate-300 leading-relaxed">{{ clinicalExplanation }}</p>
           </div>
         </div>

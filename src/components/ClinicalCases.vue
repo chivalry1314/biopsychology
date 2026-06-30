@@ -15,7 +15,7 @@
           class="bg-slate-900 hover:bg-indigo-950/40 border border-slate-800 text-[11px] py-1.5 rounded transition-all text-left px-2 flex flex-col justify-between"
         >
           <span class="font-semibold text-slate-300">{{ c.name }}</span>
-          <span class="text-[9px] text-slate-500 font-mono-tech mt-0.5">{{ c.bio }}</span>
+          <span class="text-[9px] text-slate-500 font-mono mt-0.5">{{ c.bio }}</span>
         </button>
       </div>
     </div>

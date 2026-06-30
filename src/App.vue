@@ -18,10 +18,8 @@
               v-for="tab in tabs"
               :key="tab.id"
               @click="switchTab(tab.id)"
-              :class="[
-                'w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center justify-between',
-                activeTab === tab.id ? 'tab-active' : 'text-slate-400 hover:bg-slate-900'
-              ]"
+              class="w-full text-left px-4 py-3 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-900 transition-all duration-300 flex items-center justify-between"
+              :class="activeTab === tab.id ? 'tab-active' : 'text-slate-400'"
             >
               <span class="flex items-center gap-3"><i :class="tab.icon"></i> {{ tab.label }}</span>
               <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
@@ -50,7 +48,7 @@
               </h2>
               <p class="text-[11px] text-slate-500">点击不同脑区激活特定的生理心理学神经元通路</p>
             </div>
-            <div class="flex items-center space-x-2 text-[10px] font-mono-tech text-slate-400 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
+            <div class="flex items-center space-x-2 text-[10px] font-mono text-slate-400 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
               <span>ROTATION</span>
               <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
             </div>
@@ -65,7 +63,7 @@
             </div>
 
             <div class="absolute top-3 right-3 flex flex-col gap-2 pointer-events-none">
-              <div class="bg-slate-950/70 border border-slate-800 px-3 py-1.5 rounded font-mono-tech text-[10px] text-right">
+              <div class="bg-slate-950/70 border border-slate-800 px-3 py-1.5 rounded font-mono text-[10px] text-right">
                 <span class="text-slate-500">脑电波(EEG):</span>
                 <span class="text-cyan-400 font-bold ml-1 animate-pulse">{{ eegFrequency }}</span>
               </div>
@@ -78,7 +76,6 @@
               :key="region.id"
               @click="selectRegion(region.id)"
               class="bg-slate-900 hover:bg-blue-950/30 border border-slate-800 hover:border-blue-700/50 py-2 px-1 rounded text-[11px] text-slate-300 font-medium transition-all text-center"
-              :class="selectedRegion === region.id ? 'bg-blue-950/30 border-blue-700/50 text-blue-300' : ''"
             >
               {{ region.short }}
             </button>

@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-slate-950 border-t border-slate-900 px-6 py-3 flex flex-wrap justify-between items-center z-10 relative text-xs text-slate-500 font-mono-tech">
+  <footer class="bg-slate-950 border-t border-slate-900 px-6 py-3 flex flex-wrap justify-between items-center z-10 relative text-xs text-slate-500 font-mono">
     <div>
       <span>DATA INTEGRATION ENGINE ACTIVE / NEURONAL GRID LINK STABLE</span>
     </div>

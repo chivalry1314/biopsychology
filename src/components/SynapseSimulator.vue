@@ -15,7 +15,7 @@
     <div class="relative flex-grow min-h-[300px] border border-slate-900 rounded-xl bg-slate-950 overflow-hidden">
       <canvas ref="canvas" class="absolute inset-0 w-full h-full"></canvas>
 
-      <div class="absolute top-4 left-4 bg-slate-900/80 border border-slate-800 px-3 py-2 rounded-lg text-xs space-y-1 font-mono-tech">
+      <div class="absolute top-4 left-4 bg-slate-900/80 border border-slate-800 px-3 py-2 rounded-lg text-xs space-y-1 font-mono">
         <div class="flex justify-between gap-4"><span class="text-slate-500">动作电位:</span> <span :class="apClass">{{ apText }}</span></div>
         <div class="flex justify-between gap-4"><span class="text-slate-500">囊泡释放速率:</span> <span class="text-blue-400">{{ releaseRate }}</span></div>
         <div class="flex justify-between gap-4"><span class="text-slate-500">受体结合率:</span> <span :class="bindingClass">{{ bindingRate }}%</span></div>

@@ -4,7 +4,7 @@
       <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
         <i class="fa-solid fa-microscope text-blue-400"></i> 生理解剖学与心理效应解碼
       </h3>
-      <span class="text-[10px] bg-blue-900/30 text-blue-400 px-1.5 py-0.5 rounded font-mono-tech">{{ region.tag }}</span>
+      <span class="text-[10px] bg-blue-900/30 text-blue-400 px-1.5 py-0.5 rounded font-mono">{{ region.tag }}</span>
     </div>
 
     <div class="flex-grow space-y-4 overflow-y-auto pr-1" style="max-height: 480px;">
