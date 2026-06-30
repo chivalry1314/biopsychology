@@ -2,7 +2,7 @@
   <div class="bg-slate-950/85 border border-slate-800 rounded-xl p-5 backdrop-blur-md flex-grow flex flex-col">
     <div class="flex items-center justify-between border-b border-slate-900 pb-3 mb-4">
       <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
-        <i class="fa-solid fa-microscope text-blue-400"></i> 生理解剖学与心理效应解碼
+        <i class="fa-solid fa-microscope text-blue-400"></i> 生理解剖学与心理效应解码
       </h3>
       <span class="text-[10px] bg-blue-900/30 text-blue-400 px-1.5 py-0.5 rounded font-mono">{{ region.tag }}</span>
     </div>

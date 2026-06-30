@@ -28,18 +28,18 @@
               <span class="text-emerald-400"><i class="fa-solid fa-droplet"></i> 副交感系统 (自稳态)</span>
             </div>
             <div class="w-full bg-slate-950 h-3 rounded-full relative overflow-hidden flex">
-              <div class="bg-gradient-to-r from-rose-500 to-rose-400 h-full transition-all duration-500" :style="{ width: state.sympathetic + '%' }"></div>
-              <div class="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full transition-all duration-500" :style="{ width: state.parasympathetic + '%' }"></div>
+              <div class="bg-gradient-to-r from-rose-500 to-rose-400 h-full transition-all duration-500" :style="{ width: psychologicalState.sympathetic + '%' }"></div>
+              <div class="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full transition-all duration-500" :style="{ width: psychologicalState.parasympathetic + '%' }"></div>
             </div>
             <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
-              <span>{{ state.sympathetic }}% 警醒释放</span>
-              <span>{{ state.parasympathetic }}% 细胞恢复</span>
+              <span>{{ psychologicalState.sympathetic }}% 警醒释放</span>
+              <span>{{ psychologicalState.parasympathetic }}% 细胞恢复</span>
             </div>
           </div>
 
           <div class="bg-slate-950/80 rounded-lg p-3 border border-slate-800/80">
             <span class="text-[10px] text-purple-400 font-mono block mb-1">生理心理医学关联分析 (Diagnostic Insight):</span>
-            <p class="text-xs text-slate-300 leading-relaxed">{{ state.clinicalInsight }}</p>
+            <p class="text-xs text-slate-300 leading-relaxed">{{ psychologicalState.clinicalInsight }}</p>
           </div>
         </div>
       </div>
@@ -49,57 +49,25 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import Chart from 'chart.js/auto'
 
 const props = defineProps({
   levels: {
     type: Object,
     required: true
+  },
+  psychologicalState: {
+    type: Object,
+    required: true
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 })
 
 const radarCanvas = ref(null)
 let chartInstance = null
-
-const state = computed(() => {
-  const da = props.levels.dopamine
-  const se = props.levels.serotonin
-  const ne = props.levels.norepinephrine
-  const end = props.levels.endorphin
-
-  let dominantText = '平衡、适应性基底稳态 (ANS自平衡)'
-  let clinicalInsight = '各项大脑介质处于中立区域。内源性递质在经典负反馈机制下自行调节。自主神经系统无过度唤醒，各生理系统能量代谢均衡，属于生理健康的典范。'
-  let sympathetic = 50
-  let parasympathetic = 50
-  let eegVal = 14.5
-
-  if (da > 75 && se > 60 && ne < 55) {
-    dominantText = '认知专注与温和奖赏状态 (DA/5-HT 协同中)'
-    clinicalInsight = '当前状态下，多巴胺带来的积极探索意愿配合血清素的内啡肽稳定作用，呈现典型的专注创作或深度沉思相。自主神经系统极为平衡，ANS处于恢复性再生状态。'
-    sympathetic = 40
-    parasympathetic = 60
-    eegVal = 12.8
-  } else if (ne > 75 && da > 65) {
-    dominantText = '高度警觉与应激唤醒状态 (去甲肾主导)'
-    clinicalInsight = '由于去甲肾上腺素和多巴胺的高同步率，个体面临外部强烈事件。皮质醇分泌加快，心率上升。利于紧急战斗或高强度攻克难关，但长时间会导致神经衰弱与过度焦虑。'
-    sympathetic = 80
-    parasympathetic = 20
-    eegVal = 22.4
-  } else if (se < 40 && da < 40) {
-    dominantText = '能量衰退与心境抑郁倾向'
-    clinicalInsight = '多巴胺奖励中枢迟钝，缺乏行为动机；血清素处于生理匮乏，使得负向情绪敏感度成倍升高，常伴随失眠、精力耗竭、认知弹性崩溃。植物神经系统呈现低阈值阻断状态。'
-    sympathetic = 30
-    parasympathetic = 70
-    eegVal = 6.2
-  } else if (da > 85 && ne > 85) {
-    dominantText = '兴奋冲动与高多巴胺激越'
-    clinicalInsight = '皮质下多巴胺过度活跃。可能呈现轻躁狂或多动冲动，神经元活动电位发放率剧烈增加。交感神经处于高亢状态，血管收缩、肌肉张力极高，注意瞬时衰弱明显。'
-    sympathetic = 85
-    parasympathetic = 15
-    eegVal = 28.1
-  }
-
-  return { dominantText, clinicalInsight, sympathetic, parasympathetic, eegVal }
-})
 
 const chartData = computed(() => {
   const da = props.levels.dopamine
@@ -128,7 +96,7 @@ const labels = [
 
 const initChart = () => {
   const ctx = radarCanvas.value
-  if (!ctx || typeof Chart === 'undefined') return
+  if (!ctx) return
 
   chartInstance = new Chart(ctx, {
     type: 'radar',
@@ -191,4 +159,17 @@ onUnmounted(() => {
 watch(() => props.levels, () => {
   updateChart()
 }, { deep: true })
+
+watch(() => props.active, (isActive) => {
+  if (isActive) {
+    setTimeout(() => {
+      if (chartInstance) {
+        chartInstance.resize()
+        updateChart()
+      } else {
+        initChart()
+      }
+    }, 50)
+  }
+})
 </script>

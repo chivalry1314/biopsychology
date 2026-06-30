@@ -26,7 +26,7 @@ export const neurotransmitters = [
     name: '去甲肾上腺素',
     abbr: 'NE',
     en: 'Norepinephrine',
-    role: '觉醒与唤醒',
+    role: '觉醒与应激',
     color: 'rose',
     hex: '#f43f5e',
     from: 'from-rose-500',

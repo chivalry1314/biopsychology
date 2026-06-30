@@ -35,7 +35,7 @@
         <span class="text-[10px] text-slate-500 font-mono block mb-1">当前主导心理状态:</span>
         <p class="text-xs text-blue-300 flex items-center gap-2">
           <i class="fa-solid fa-circle-nodes text-blue-400 animate-pulse"></i>
-          {{ dominantState }}
+          {{ psychologicalState.dominantText }}
         </p>
       </div>
       <div class="mt-3 flex justify-between gap-2">
@@ -63,38 +63,32 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { neurotransmitters } from '../data/neurotransmitters.js'
+import { useAudio } from '../composables/useAudio.js'
+
+const { playSound } = useAudio()
 
 const props = defineProps({
   levels: {
     type: Object,
     required: true
+  },
+  psychologicalState: {
+    type: Object,
+    required: true
   }
 })
 
-const emit = defineEmits(['update-levels'])
+const emit = defineEmits(['update-levels', 'apply-preset'])
 
 const updateLevel = (key, value) => {
   emit('update-levels', { ...props.levels, [key]: Number(value) })
 }
 
 const applyPreset = (type) => {
-  let next
-  if (type === 'joy') next = { dopamine: 95, serotonin: 85, norepinephrine: 65, endorphin: 80 }
-  else if (type === 'calm') next = { dopamine: 40, serotonin: 90, norepinephrine: 25, endorphin: 60 }
-  else if (type === 'fight') next = { dopamine: 80, serotonin: 30, norepinephrine: 95, endorphin: 40 }
-  emit('update-levels', next)
+  playSound(300 + (Math.random() * 400), 0.2)
+  emit('apply-preset', type)
 }
-
-const dominantState = computed(() => {
-  const { dopamine: da, serotonin: se, norepinephrine: ne, endorphin: end } = props.levels
-  if (da > 75 && se > 60 && ne < 55) return '认知专注与温和奖赏状态 (DA/5-HT 协同中)'
-  if (ne > 75 && da > 65) return '高度警觉与应激唤醒状态 (去甲肾主导)'
-  if (se < 40 && da < 40) return '能量衰退与心境抑郁倾向'
-  if (da > 85 && ne > 85) return '兴奋冲动与高多巴胺激越'
-  return '平衡、适应性基底稳态 (ANS自平衡)'
-})
 </script>
 
 <style scoped>

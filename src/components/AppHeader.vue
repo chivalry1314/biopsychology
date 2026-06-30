@@ -15,7 +15,7 @@
     <div class="flex items-center space-x-6 text-xs text-slate-400 font-mono mt-4 md:mt-0">
       <div class="hidden lg:block border-l border-slate-800 pl-4">
         <span class="text-slate-500">突触网活跃度:</span>
-        <span class="text-emerald-400 glow-emerald font-bold ml-1">{{ synapseRate }}</span>
+        <span class="text-emerald-400 glow-emerald font-bold ml-1">{{ synapseRate }}%</span>
       </div>
       <div class="hidden lg:block border-l border-slate-800 pl-4">
         <span class="text-slate-500">脑氧饱和度 (rSO₂):</span>
@@ -33,7 +33,7 @@
 defineProps({
   synapseRate: {
     type: String,
-    default: '94.2%'
+    default: '90.0'
   }
 })
 </script>

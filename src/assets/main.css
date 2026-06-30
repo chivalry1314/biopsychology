@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   font-family: 'Noto Sans SC', 'Orbitron', 'Share Tech Mono', sans-serif;
@@ -16,6 +18,10 @@ body {
 }
 
 /* Scanline effect */
+[v-cloak] {
+  display: none;
+}
+
 .scanlines {
   position: fixed;
   top: 0;

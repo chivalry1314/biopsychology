@@ -58,7 +58,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useAudio } from '../composables/useAudio.js'
+
+const props = defineProps({
+  active: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['update:binding-rate'])
+const { playSound, playBeep } = useAudio()
 
 const canvas = ref(null)
 let ctx, width, height, animFrameId, resizeObserver
@@ -97,7 +108,9 @@ const activeColor = {
 }
 
 const resize = () => {
+  if (!canvas.value || !ctx) return
   const rect = canvas.value.getBoundingClientRect()
+  if (rect.width === 0 || rect.height === 0) return
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
   width = rect.width
   height = rect.height
@@ -138,6 +151,7 @@ const initElements = () => {
 }
 
 const triggerAction = (type) => {
+  playSound(600, 0.2, 'square')
   actionPotentialWave = 1
   apActive.value = true
   apValue.value = '+40 mV (去极化)'
@@ -170,15 +184,19 @@ const triggerAction = (type) => {
 }
 
 const reset = () => {
+  playBeep()
   initElements()
   apActive.value = false
   apValue.value = '-70 mV (复极化)'
   releaseRate.value = 0
   bindingRate.value = 0
+  emit('update:binding-rate', 0)
 }
 
 const loop = () => {
   animFrameId = requestAnimationFrame(loop)
+
+  if (!props.active) return
 
   ctx.fillStyle = '#020617'
   ctx.fillRect(0, 0, width, height)
@@ -261,6 +279,7 @@ const loop = () => {
           rec.activated = true
           rec.activationTimer = 120
           m.bound = true
+          playSound(900 + Math.random() * 200, 0.05)
         }
       }
     })
@@ -289,6 +308,7 @@ const loop = () => {
   })
 
   bindingRate.value = receptors.length > 0 ? Math.round((activeCount / receptors.length) * 100) : 0
+  emit('update:binding-rate', bindingRate.value)
 }
 
 onMounted(() => {
@@ -302,5 +322,11 @@ onMounted(() => {
 onUnmounted(() => {
   cancelAnimationFrame(animFrameId)
   resizeObserver.disconnect()
+})
+
+watch(() => props.active, (isActive) => {
+  if (isActive) {
+    setTimeout(resize, 50)
+  }
 })
 </script>
