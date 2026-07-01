@@ -51,7 +51,7 @@
             <div>
               <h2 class="text-base font-bold text-slate-200 flex items-center gap-2">
                 <i class="fa-solid fa-circle-dot text-cyan-400 animate-pulse"></i>
-                3D 全脑定位与大脑皮层生理图谱 (Vue 驱动)
+                3D 全脑定位与大脑皮层生理图谱
               </h2>
               <p class="text-[11px] text-slate-500">点击不同脑区或下方按钮，联动触发神经元生理学通路与心理机制分析</p>
             </div>

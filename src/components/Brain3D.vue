@@ -83,7 +83,7 @@ const DEFAULT_POINT_COLOR = new THREE.Color(0xffffff)
 const DIMMED_POINT_COLOR = new THREE.Color(0x94a3b8)
 
 const MODEL_SCALE = 0.055
-const MODEL_URL = '/models/brain_vertex_low.obj'
+const MODEL_URL = `${import.meta.env.BASE_URL}models/brain_vertex_low.obj`
 
 function createPointTexture() {
   const canvas = document.createElement('canvas')
