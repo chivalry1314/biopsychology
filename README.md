@@ -6,7 +6,8 @@
 
 ## 在线预览
 
-GitHub Pages: `https://chivalry1314.github.io/biopsychology/`
+- 主应用：https://chivalry1314.github.io/biopsychology/
+- 功能文档：https://chivalry1314.github.io/biopsychology/docs/
 
 ## 功能模块
 
@@ -44,6 +45,12 @@ GitHub Pages: `https://chivalry1314.github.io/biopsychology/`
 ```
 psychology/
 ├── dist/                          # 构建产物（部署此目录）
+├── docs/                          # VitePress 功能文档
+│   ├── .vitepress/
+│   │   └── config.js              # VitePress 配置
+│   ├── features/                  # 功能模块文档
+│   ├── guide/                     # 指南文档
+│   └── index.md                   # 文档首页
 ├── public/
 │   └── favicon.svg
 ├── src/
@@ -76,6 +83,18 @@ npm run dev
 ```
 
 由于 `vite.config.js` 中设置了 `base: '/biopsychology/'`，本地访问地址为 `http://127.0.0.1:8081/biopsychology/`（如果 8080 被占用，端口可能为 8081）。
+
+## 文档开发
+
+功能文档使用 [VitePress](https://vitepress.dev/) 构建，源文件位于 `docs/` 目录。
+
+```bash
+# 本地预览文档
+npm run docs:dev
+
+# 构建文档（输出到 dist/docs/）
+npm run docs:build
+```
 
 ## 构建
 
