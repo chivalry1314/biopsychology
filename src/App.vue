@@ -168,7 +168,7 @@
 
       <!-- RIGHT COLUMN -->
       <div class="xl:col-span-3 flex flex-col gap-6">
-        <RegionDetail :region="currentRegion" class="flex-grow" />
+        <RegionDetail :region="currentRegion" :active-tab="activeTab" class="flex-grow" />
         <ClinicalCases @load-case="loadClinicalCase" />
       </div>
     </div>
